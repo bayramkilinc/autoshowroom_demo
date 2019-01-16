@@ -8,15 +8,24 @@ import org.springframework.stereotype.Service;
 import com.java.autoshowroom.data.CarRepository;
 import com.java.autoshowroom.exception.ResourceNotFoundException;
 import com.java.autoshowroom.model.Car;
+import com.java.autoshowroom.model.Person;
 
 @Service
 public class CarServiceImpl implements CarService {
 
 	@Autowired
 	private CarRepository carRepository;
+	@Autowired
+	private PersonService personService;
 	
 	@Override
 	public Car save(Car car) {
+		long personId = car.getPerson().getId();
+		if(personId != 0L) {
+			Person person = personService.findById(personId); 
+			car.setPerson(person);
+		}
+		
 		return carRepository.save(car);
 	}
 
@@ -41,7 +50,13 @@ public class CarServiceImpl implements CarService {
 	public Car update(Car car) {
 		
 		carRepository.findById(car.getId()).orElseThrow(() -> new ResourceNotFoundException(car.getId(), "araç"));
-		
+
+		long personId = car.getPerson().getId();
+		if(personId != 0L) {
+			Person person = personService.findById(personId); 
+			car.setPerson(person);
+		}
+
 		return carRepository.save(car);
 	}
 

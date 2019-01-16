@@ -1,13 +1,20 @@
 package com.java.autoshowroom.model;
 
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
+//@JsonIgnoreProperties(value= {"person"}, allowGetters=true)
 public class Car extends AuditModel {
 
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,12 +27,14 @@ public class Car extends AuditModel {
 
 	private String plate;
 	
-	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false, cascade={ CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name="person_id", referencedColumnName="id", nullable=false)
 	@OnDelete(action=OnDeleteAction.CASCADE)
-	@JsonIgnore
 	private Person person;
 
+//	@Column(name = "person_id", insertable = false, updatable = false, nullable=false)
+//	private long personId;
+//	
 	public long getId() {
 		return id;
 	}
@@ -57,4 +66,21 @@ public class Car extends AuditModel {
 	public void setPlate(String plate) {
 		this.plate = plate;
 	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+//	public long getPersonId() {
+//		return personId;
+//	}
+//
+//	public void setPersonId(long personId) {
+//		this.personId = personId;
+//	}
+
 }

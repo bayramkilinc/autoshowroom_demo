@@ -40,4 +40,19 @@ public class Person extends AuditModel {
 		this.lastName = lastName;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Person) {
+			Person person = (Person)obj;
+			return person.getId() == this.id;
+		}
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+	
 }

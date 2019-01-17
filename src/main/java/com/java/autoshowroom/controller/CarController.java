@@ -48,10 +48,16 @@ public class CarController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public ResponseEntity<Car> updateCar(@RequestBody Car car){
-
 		Car carUpdated = carService.update(car);
 		
 		return ResponseEntity.ok(carUpdated);
+	}
+	
+	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteCar(@RequestBody Car car){
+		carService.delete(car);
+		
+		return ResponseEntity.ok().build();
 	}
 	
 }

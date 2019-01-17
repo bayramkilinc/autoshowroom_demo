@@ -11,4 +11,5 @@ public interface CarService {
 	List<Car> findAll();
 	Car findById(long id);
 	List<Car> findByModelName(String modelName);
+	void delete(Car car);
 }

@@ -61,4 +61,10 @@ public class CarServiceImpl implements CarService {
 		return carRepository.save(car);
 	}
 
+	@Override
+	public void delete(Car car) {
+		carRepository.findById(car.getId()).orElseThrow(() -> new ResourceNotFoundException(car.getId(), "araç"));
+		carRepository.delete(car);
+	}
+
 }

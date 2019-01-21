@@ -18,7 +18,7 @@ import com.java.autoshowroom.service.CarService;
 public class CarController {
 
 	@Autowired
-	private CarService carService;
+	private CarService carService; 
 	
 	@RequestMapping(value="/all", method= RequestMethod.GET)
 	public ResponseEntity<List<Car>> getCars(){
